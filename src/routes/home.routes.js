@@ -1,8 +1,9 @@
 const express = require("express");
-const homeController = require('../controllers/homeController')
+const {homeViewController,saludoViewController} = require('../controllers/homeController')
 
 const homeRoutes = express.Router();
 
-homeRoutes.get('/', homeController.homeViewController)
+homeRoutes.get('/', homeViewController)
+homeRoutes.get('/saludo', saludoViewController)
 
 module.exports = homeRoutes;
