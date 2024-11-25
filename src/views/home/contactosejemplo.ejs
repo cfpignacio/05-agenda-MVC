@@ -1,0 +1,25 @@
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% contactos.forEach(c=> { %>
+            <tr>
+                <td>
+                    <%= c.firstname %>
+                </td>
+                <td>
+                    <%= c.lastname %>
+                </td>
+                <td>
+                    <%= c.email %>
+                </td>
+            </tr>
+            <% }) %>
+
+    </tbody>
+</table>
