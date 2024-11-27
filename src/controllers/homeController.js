@@ -8,16 +8,10 @@ saludoViewController = (req, res) => {
     res.render('home/saludo',{title:'Saludo 👋'})
 }
 
-contactosEjemploController= async (req, res) => {
-    const contactos = await prisma.contacto.findMany();
-
-    res.render('home/contactosejemplo', {title:'EJEMPLO',contactos})
-}
 
 
 
 module.exports = {
     homeViewController,
     saludoViewController,
-    contactosEjemploController
 };

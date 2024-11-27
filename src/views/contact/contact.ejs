@@ -1,0 +1,28 @@
+<% if (error) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+    <% } else { %>
+
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <%= contact.id %>
+            </li>
+            <li class="list-group-item">
+                <%= contact.firstname %>
+            </li>
+            <li class="list-group-item">
+                <%= contact.lastname %>
+            </li>
+            <li class="list-group-item">
+                <%= contact.phone %>
+            </li>
+            <li class="list-group-item">
+                <%= contact.email %>
+            </li>
+        </ul>
+
+
+        <a href="/contact" class="btn btn-primary mt-3">Volver</a>
+        <% } %>

@@ -5,6 +5,5 @@ const homeRoutes = express.Router();
 
 homeRoutes.get('/', homeViewController)
 homeRoutes.get('/saludo', saludoViewController)
-homeRoutes.get('/ejemplo', contactosEjemploController)
 
 module.exports = homeRoutes;
