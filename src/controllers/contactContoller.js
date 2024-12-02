@@ -1,7 +1,9 @@
 const {prisma} = require('../../prisma/prismaClient')
 
 listContactViewController = async (req, res) => {
-    const contacts = await prisma.contacto.findMany();
+    const contacts = await prisma.contacto.findMany({where:{
+        deletedAt: null
+    }});
     res.render('contact/list', {title:'contacts', contacts})
 }
 
@@ -10,7 +12,7 @@ ContactViewController = async (req, res) => {
     try {
         const id = Number(req.params.id)
         const contact = await prisma.contacto.findFirstOrThrow({where:{id}})
-        res.render('contact/contact', {title:`${contact.firstname} ${contact.lastname}`,contact,error:null})
+        res.render('contact/contact', {contact,error:null})
 
     } catch (error) {
 
@@ -19,8 +21,29 @@ ContactViewController = async (req, res) => {
    
 }
 
+DeleteContactController = async (req,res) => {
+    try {
+        const id = Number(req.params.id)
+
+        await prisma.contacto.update({
+            where: {id},
+            data: {
+                deletedAt: new Date()
+            }
+        })
+
+        res.redirect('/contact')
+        
+    } catch (error) {
+
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos borrar el contacto"})
+
+    }
+}
+
 module.exports = {
     listContactViewController,
-    ContactViewController
+    ContactViewController,
+    DeleteContactController
 };
 
