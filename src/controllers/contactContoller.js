@@ -41,9 +41,31 @@ DeleteContactController = async (req,res) => {
     }
 }
 
+
+FormContactViewController = async (req, res) => {
+    res.render('contact/create', {title:'Create contact'})
+}
+
+CreateContactController = async (req, res) => {
+
+    try {
+        const data = req.body
+
+        const new_contact = await prisma.contacto.create({data})
+
+        res.redirect('/contact')
+        
+    } catch (error) {
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos crear el contacto"})
+    }
+}
+   
+
 module.exports = {
     listContactViewController,
     ContactViewController,
-    DeleteContactController
+    DeleteContactController,
+    FormContactViewController,
+    CreateContactController
 };
 

@@ -6,6 +6,10 @@ const contactRoutes = require('./src/routes/contact.routes');
 
 const app = express();
 const port = 3000;
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+
 const public = path.join(__dirname, 'public');
 app.use('/public', express.static(public));
 
