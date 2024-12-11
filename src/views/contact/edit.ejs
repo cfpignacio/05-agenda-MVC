@@ -1,0 +1,27 @@
+<div class="form-contact">
+    <form name="form-create-contact" action="/contact/edit/<%= contact.id %>" method="post">
+        <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="text" class="form-control" name="id" value="<%= contact.id %>" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="firstname" class="form-label">Firstname</label>
+            <input type="text" class="form-control" name="firstname" value="<%= contact.firstname %>">
+        </div>
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Lastname</label>
+            <input type="text" class="form-control" name="lastname" value="<%= contact.lastname %>">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" value="<%= contact.email %>" disabled>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" name="phone" value="<%= contact.phone %>" disabled>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

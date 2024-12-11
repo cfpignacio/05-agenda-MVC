@@ -8,10 +8,11 @@
             <tr>
                 <th scope="col">First</th>
                 <th scope="col">Last</th>
-                <th scope="col">email</th>
-                <th scope="col">Acciones</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones </th>
             </tr>
         </thead>
+
         <tbody>
             <% contacts.forEach(c=> { %>
                 <tr>
@@ -27,6 +28,7 @@
                     <td>
                         <a href="/contact/<%= c.id %>">🔎</a>
                         <a href="/contact/delete/<%= c.id %>">🗑️</a>
+                        <a href="/contact/edit/<%= c.id %>">✏️</a>
                     </td>
                 </tr>
                 <% }) %>
