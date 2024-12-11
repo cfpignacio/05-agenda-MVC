@@ -3,6 +3,9 @@ const path = require('path');
 const homeRoutes = require('./src/routes/home.routes')
 var expressLayouts = require('express-ejs-layouts');
 const contactRoutes = require('./src/routes/contact.routes');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 const port = 3000;
@@ -15,7 +18,15 @@ app.use('/public', express.static(public));
 
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
-
+app.use(cookieParser())
+app.use(session({
+	secret:'Acaunpasswordcompliado',
+	resave: false,
+	saveUninitialized: true,
+	cookie:{
+		maxAge: 60000 // 1 minuto
+	}
+}));
 // configuro la ubicacion de las vistas y de el layout
 app.set('views', path.join(__dirname,'src/views'))
 app.set('layout', path.join(__dirname,'src/views/shared/layout'))
