@@ -20,13 +20,13 @@ app.set('view engine', 'ejs');
 app.use(expressLayouts);
 app.use(cookieParser())
 app.use(session({
-	secret:'Acaunpasswordcompliado',
-	resave: false,
-	saveUninitialized: true,
-	cookie:{
-		maxAge: 60000 // 1 minuto
+	secret: 'miClaveSecreta', // Clave secreta para firmar las sesiones
+	resave: false,            // No volver a guardar la sesión si no ha cambiado
+	saveUninitialized: true,  // Guarda las sesiones aunque no se hayan inicializado
+	cookie: {
+	  maxAge: 60000 // La cookie durará 1 minuto (60000ms)
 	}
-}));
+  }));
 // configuro la ubicacion de las vistas y de el layout
 app.set('views', path.join(__dirname,'src/views'))
 app.set('layout', path.join(__dirname,'src/views/shared/layout'))
