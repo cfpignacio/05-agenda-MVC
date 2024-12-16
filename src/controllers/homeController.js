@@ -8,11 +8,12 @@ homeViewController =  (req, res) => {
         req.session.visitas = 1
     }
 
-    res.render('home/index',{title:'Home 🏠', visitas: req.session.visitas })
+    res.render('home/index',{title:'Home 🏠', visitas: req.session.visitas , isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
 }
 
 saludoViewController = (req, res) => {
-    res.render('home/saludo',{title:'Saludo 👋'})
+    //req.session.mensaje = "hola"
+    res.render('home/saludo',{title:'Saludo 👋', mensaje:req.session.mensaje})
 }
 
 logoutController =  (req, res) => {

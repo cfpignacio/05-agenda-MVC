@@ -5,6 +5,7 @@ var expressLayouts = require('express-ejs-layouts');
 const contactRoutes = require('./src/routes/contact.routes');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const authRoutes = require('./src/routes/auth.routes');
 
 
 const app = express();
@@ -17,8 +18,10 @@ const public = path.join(__dirname, 'public');
 app.use('/public', express.static(public));
 
 app.set('view engine', 'ejs');
+
 app.use(expressLayouts);
 app.use(cookieParser())
+
 app.use(session({
 	secret: 'miClaveSecreta', // Clave secreta para firmar las sesiones
 	resave: false,            // No volver a guardar la sesión si no ha cambiado
@@ -33,6 +36,7 @@ app.set('layout', path.join(__dirname,'src/views/shared/layout'))
 
 app.use("/",homeRoutes)
 app.use("/contact",contactRoutes)
+app.use("/login",authRoutes)
 
 app.listen(port, () => {
 	console.log(`Servidor corriendo en el puerto: http://localhost:${port}`);

@@ -4,7 +4,7 @@ listContactViewController = async (req, res) => {
     const contacts = await prisma.contacto.findMany({where:{
         deletedAt: null
     }});
-    res.render('contact/list', {title:'contacts', contacts})
+    res.render('contact/list', {title:'contacts', contacts,isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
 }
 
 ContactViewController = async (req, res) => {
@@ -12,11 +12,11 @@ ContactViewController = async (req, res) => {
     try {
         const id = Number(req.params.id)
         const contact = await prisma.contacto.findFirstOrThrow({where:{id}})
-        res.render('contact/contact', {contact,error:null})
+        res.render('contact/contact', {contact,error:null,isAuth:req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
 
     } catch (error) {
 
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos encontrar el contacto"})
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos encontrar el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
     }
    
 }
@@ -36,14 +36,14 @@ DeleteContactController = async (req,res) => {
         
     } catch (error) {
 
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos borrar el contacto"})
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos borrar el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
 
     }
 }
 
 
 FormContactViewController = async (req, res) => {
-    res.render('contact/create', {title:'Create contact'})
+    res.render('contact/create', {title:'Create contact',isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
 }
 
 CreateContactController = async (req, res) => {
@@ -56,7 +56,7 @@ CreateContactController = async (req, res) => {
         res.redirect('/contact')
         
     } catch (error) {
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos crear el contacto"})
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos crear el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
     }
 }
 
@@ -79,7 +79,7 @@ ContactEditController = async (req, res) => {
         res.redirect('/contact')
 
     } catch (error) {
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos editar el contacto"})
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos editar el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
     }
 }
    
