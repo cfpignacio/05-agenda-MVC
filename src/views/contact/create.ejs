@@ -1,24 +1,30 @@
-<div class="form-contact">
-    <form name="form-create-contact" action="/contact" method="post">
+<% if (errors.length !=0) { %>
+    <div class="alert alert-danger" role="alert">
+        <%= errors %>
+    </div>
+    <% } %>
 
-        <div class="mb-3">
-            <label for="firstname" class="form-label">Firstname</label>
-            <input type="text" class="form-control" name="firstname">
-        </div>
-        <div class="mb-3">
-            <label for="lastname" class="form-label">Lastname</label>
-            <input type="text" class="form-control" name="lastname">
-        </div>
+        <div class="form-contact">
+            <form name="form-create-contact" action="/contact" method="post">
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email">
-        </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">Firstname</label>
+                    <input type="text" class="form-control" name="firstname">
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Lastname</label>
+                    <input type="text" class="form-control" name="lastname">
+                </div>
 
-        <div class="mb-3">
-            <label for="phone" class="form-label">Phone</label>
-            <input type="tel" class="form-control" name="phone">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="tel" class="form-control" name="phone">
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Send</button>
-    </form>
-</div>

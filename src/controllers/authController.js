@@ -2,7 +2,7 @@ const {prisma} = require('../../prisma/prismaClient')
 const bcrypt = require('bcryptjs')
 
 loginViewController = (req, res) => {
-    res.render('auth/login', {title:'Login usuarios',error:null, isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+    res.render('auth/login', {title:'Login usuarios'})
 }
 loginController = async (req, res) => {
 
@@ -25,13 +25,19 @@ loginController = async (req, res) => {
        
         
         req.session.isAuth = true;
-        req.session.fullName = `${user.firstName} ${user.lastName}`
-        req.session.email = user.email
+        
+        req.session.user = {
+            fullName:`${user.firstName} ${user.lastName}`,
+            email: user.email
+        }
+        
 
-        res.render('home/index',{title:'Home 🏠', visitas: req.session.visitas , isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+        res.redirect('/')
 
     } catch (error) {
-        res.render('auth/login', {title:`ERROR`, error:"No pudimos validar el usuario"})
+
+        req.flash('errors', 'No pudimos validar el usuario')
+        res.redirect('/login')
     }
 
 }

@@ -6,7 +6,9 @@ const contactRoutes = require('./src/routes/contact.routes');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./src/routes/auth.routes');
-
+const localProps = require('./src/middleware/localProps')
+const flash = require('connect-flash');
+const {authMiddleware} = require("./src/middleware/authMiddleware")
 
 const app = express();
 const port = 3000;
@@ -19,7 +21,7 @@ app.use('/public', express.static(public));
 
 app.set('view engine', 'ejs');
 
-app.use(expressLayouts);
+app.use(expressLayouts)
 app.use(cookieParser())
 
 app.use(session({
@@ -30,12 +32,16 @@ app.use(session({
 	  maxAge: 60000 // La cookie durará 1 minuto (60000ms)
 	}
   }));
+  app.use(flash());
+  app.use(localProps)
+
+
 // configuro la ubicacion de las vistas y de el layout
 app.set('views', path.join(__dirname,'src/views'))
 app.set('layout', path.join(__dirname,'src/views/shared/layout'))
 
 app.use("/",homeRoutes)
-app.use("/contact",contactRoutes)
+app.use("/contact",authMiddleware,contactRoutes)
 app.use("/login",authRoutes)
 
 app.listen(port, () => {

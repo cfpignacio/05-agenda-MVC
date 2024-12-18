@@ -1,10 +1,12 @@
 const {prisma} = require('../../prisma/prismaClient')
+const { createContactSchema } = require('../helpers/create_contact.validate');
+const { editContactSchema } = require('../helpers/edit_contact.validate');
 
 listContactViewController = async (req, res) => {
     const contacts = await prisma.contacto.findMany({where:{
         deletedAt: null
     }});
-    res.render('contact/list', {title:'contacts', contacts,isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+    res.render('contact/list', {title:'contacts', contacts})
 }
 
 ContactViewController = async (req, res) => {
@@ -12,11 +14,11 @@ ContactViewController = async (req, res) => {
     try {
         const id = Number(req.params.id)
         const contact = await prisma.contacto.findFirstOrThrow({where:{id}})
-        res.render('contact/contact', {contact,error:null,isAuth:req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+        res.render('contact/contact', {contact})
 
     } catch (error) {
-
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos encontrar el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+        req.flash('errors', 'No pudimos encontrar el contacto solicitado')
+        res.redirect('/contact')
     }
    
 }
@@ -36,27 +38,36 @@ DeleteContactController = async (req,res) => {
         
     } catch (error) {
 
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos borrar el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+        res.render('contact/contact', {title:`ERROR`, error:"No pudimos borrar el contacto"})
 
     }
 }
 
 
 FormContactViewController = async (req, res) => {
-    res.render('contact/create', {title:'Create contact',isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+    res.render('contact/create', {title:'Create contact'})
 }
 
 CreateContactController = async (req, res) => {
 
     try {
         const data = req.body
-        console.log(data)
-        const new_contact = await prisma.contacto.create({data})
 
+        const {error, value} = createContactSchema.validate(data)
+
+        if(error){
+            req.flash('errors', error.message)
+            res.render('contact/create', {title:'Create contact'})
+        }
+
+        const new_contact = await prisma.contacto.create({data})
+        
         res.redirect('/contact')
         
     } catch (error) {
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos crear el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+
+        req.flash('errors', error.message)
+        res.redirect('/contact/add')
     }
 }
 
@@ -74,12 +85,18 @@ ContactViewEditController = async (req, res) => {
 ContactEditController = async (req, res) => {
     try {
         const id = Number(req.params.id)
+        const {error, value} = editContactSchema.validate(req.body)
+        if(error){
+            throw new Error(error)
+        }
         const contact = await prisma.contacto.update({where:{id},data:{firstname:req.body.firstname, lastname:req.body.lastname}});
 
         res.redirect('/contact')
 
     } catch (error) {
-        res.render('contact/contact', {title:`ERROR`, error:"No pudimos editar el contacto",isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+
+        req.flash('errors', error.message)
+        res.redirect('/contact')
     }
 }
    

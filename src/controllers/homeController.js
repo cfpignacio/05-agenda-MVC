@@ -2,13 +2,8 @@ const {prisma} = require('../../prisma/prismaClient')
 
 homeViewController =  (req, res) => {
 
-    if(req.session.visitas){
-        req.session.visitas++
-    }else{
-        req.session.visitas = 1
-    }
-
-    res.render('home/index',{title:'Home 🏠', visitas: req.session.visitas , isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email})
+  
+    res.render('home/index',{title:'Home 🏠' })
 }
 
 saludoViewController = (req, res) => {

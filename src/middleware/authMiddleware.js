@@ -1,11 +1,11 @@
-
-
 authMiddleware = (req, res, next) => {
-    if(!req.session?.isAuth){   
-        res.render('auth/login', {isAuth : req.session.isAuth , fullName: req.session.fullName, email: req.session.email,error:'Necesitas estar autenticado!!'})
+    if (!req.session?.isAuth) {   
+        req.flash('errors', 'No estas autorizado');              
+        return res.redirect('/login');
     }
     next();
 }
+
 
 module.exports = {
     authMiddleware

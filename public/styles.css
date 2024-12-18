@@ -10,3 +10,21 @@ td a {
 div-listado-contactos {
     text-align: center;
 }
+
+.portada-container {
+    background-color: rgba(230, 227, 227, 0.432);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 40px 0;
+}
+
+.portada-container img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.portada-container h1,
+.portada-container h2 {
+    margin-bottom: 20px;
+}
